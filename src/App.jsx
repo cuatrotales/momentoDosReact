@@ -6,14 +6,14 @@ import { useEffect, useState } from "react";
 function App() {
   // #region backend
   const [data, setData] = useState([]);
-  const [sid, setSid] = useState('')
+  const [sid, setId] = useState('')
   const [nombre, setNombre] = useState('')
-  const [Precio, setPrecio] = useState('');
+  const [precio, setPrecio] = useState('');
   const [isLoading, setLoading] = useState(true);
 
   const getArticulos = async () => {
     try {
-      const url = `http://172.18.81.199:3100/api/Articulos`;
+      const url = `http://172.16.59.109:3100/api/Articulos`;
       const response = await axios.get(url);
       setData(response.data)
       console.log(response.data)
@@ -29,38 +29,43 @@ function App() {
     getArticulos();
   }, [])
 
-  const saveCliente = async () => {
-    if (!nombre.trim()) {
-      alert("Nombre  del articulo es obligatorio");
+  const createArticulo = async () => {
+    if (nombre === '' || nombre === null || nombre === undefined || precio === '' || precio === null || precio === undefined) {
+      alert("Debe tener un nombre y un apellido");
       return;
-    }
-    setLoading(true);
-    try {
-      const response = await axios.post(`http://172.18.81.199:3100/api/articulos`, {
-        nombre,
-        Precio
-      });
-      alert("Articulo agregado correctamente ...")
-      getArticulos();
-    } catch (error) {
-      console.log(error)
-    }
-    finally {
-      setLoading(false);
+    } else {
+      if (precio > 15000  && precio < 100000) {
+        setLoading(true);
+        try {
+          const response = await axios.post(`http://172.16.59.109:3100/api/articulos`, {
+            nombre,
+            precio
+          });
+          alert("Articulo agregado correctamente ...")
+          getArticulos();
+        } catch (error) {
+          console.log(error)
+        }
+        finally {
+          setLoading(false);
+        }
+      } else{
+        alert('El precio debe ser mayor que 15,000 y menor que 100,000');
+      }
     }
   };
   const updateArticulo = async (id) => {
-    if (!nombre.trim()) {
-      alert("Nombre del articulo es obligatorio");
+    if (nombre === '' || nombre === null || nombre === undefined || precio === '' || precio === null || precio === undefined) {
+      alert("Debe tener todos los campos...");
       return;
     }
     setLoading(true);
     try {
-      const response = await axios.put(`http://172.18.81.199:3100/api/articulos/${id}`, {
+      const response = await axios.put(`http://172.16.59.109:3100/api/articulos/${id}`, {
         nombre,
-        Precio
+        precio
       });
-      alert("Cliente actualizado correctamente ...")
+      alert("Se actualizó el articulo")
       getArticulos();
     } catch (error) {
       console.log(error)
@@ -70,28 +75,32 @@ function App() {
     }
   };
   const deleteArticulo = async (id) => {
-    setLoading(true);
-    try {
-      if (window.confirm("Está seguro de eliminar este Articulo?")) {
-        const response = await axios.delete(`http://172.18.81.199:3100/api/articulos/${id}`);
-        alert("articulo eliminado correctamente ...")
-        getArticulos();
+    if (id === '') {
+      alert('Debe tener una identificacion.');
+    } else {
+      setLoading(true);
+      try {
+        if (window.confirm("Está seguro de eliminar este Articulo?")) {
+          const response = await axios.delete(`http://172.16.59.109:3100/api/articulos/${id}`);
+          alert("articulo eliminado correctamente ...")
+          getArticulos();
+          onClean();
+        }
+      } catch (error) {
+        console.log(error)
       }
-
-    } catch (error) {
-      console.log(error)
-    }
-    finally {
-      setLoading(false);
+      finally {
+        setLoading(false);
+      }
     }
   };
   const getArticuloPorId = async (id) => {
     try {
-      const url = `http://172.18.81.199:3100/api/articulos/${id}`;
+      const url = `http://172.16.59.109:3100/api/articulos/${id}`;
       const response = await axios.get(url);
       if (response.data.nombre != null) {
         setNombre(response.data.nombre);
-        //setApellidos(response.data.apellidos);
+        setPrecio(response.data.precio);
       }
       else {
         alert("No se encuentra el id " + id);
@@ -105,10 +114,10 @@ function App() {
     }
   };
   const onClean = () => {
-    setNombre("");
-    setPrecio("")
+    setNombre('');
+    setPrecio('');
     setData([]);
-    setSid('');
+    setId('');
   }
   //#endregion
   // #region frontend
@@ -118,7 +127,7 @@ function App() {
       <Navbar></Navbar>
       {/* Banner */}
       <Banner></Banner>
-      <form className="container my-5">
+      <form className="container my-5 py-5" id="articulos">
         <h2>Actualizacion de Articulo</h2>
         <div className="row">
           <div className="col">
@@ -130,7 +139,7 @@ function App() {
               placeholder="Identificación del articulo a buscar"
               className="form-control"
               value={sid}
-              onChange={e => setSid(e.target.value)}
+              onChange={e => setId(e.target.value)}
             />
           </div>
         </div>
@@ -150,17 +159,19 @@ function App() {
         </div>
         <div className="row">
           <div className="col">
-            <label htmlFor="nombre">valor</label>
+            <label htmlFor="precio">Precio</label>
             <input
-              type="text"
-              id="valor"
-              name="valor"
-              placeholder="valor"
+              type="number"
+              id="precio"
+              name="precio"
+              value={precio}
+              placeholder="Precio"
               className="form-control"
+              onChange={e => setPrecio(e.target.value)}
             />
           </div>
         </div>
-        <button className="btn btn-primary mt-3" type="button" onClick={saveCliente}>Guardar</button>
+        <button className="btn btn-primary mt-3" type="button" onClick={createArticulo}>Guardar</button>
         <button className="btn btn-success mt-3 mx-3" type="button" onClick={() => getArticuloPorId(sid)}>Buscar</button>
         <button className="btn btn-warning mt-3 mx-3" type="button" onClick={() => updateArticulo(sid)}>Actualizar</button>
         <button className="btn btn-danger mt-3 mx-3" type="button" onClick={() => deleteArticulo(sid)}>Eliminar</button>
@@ -168,7 +179,7 @@ function App() {
         <button className="btn btn-info mt-3 mx-3" type="button" onClick={onClean}>Limpiar Datos</button>
       </form>
 
-      <div className="container">
+      <div className="container my-5 p-5 rounded shadow">
         <table className="table table-hover">
           <thead>
             <th>Id</th>

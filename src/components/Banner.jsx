@@ -8,8 +8,7 @@ export default function Banner() {
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777" /></svg>
-
+                    <img src="https://images.wallpaperscraft.com/image/single/soltador_cruiser_hamann_bike_custom_95865_1366x768.jpg" alt="Imagen Portada" className="w-100"/>
                     <div class="container">
                         <div class="carousel-caption text-start">
                             <h1>Example headline.</h1>
@@ -19,7 +18,7 @@ export default function Banner() {
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777" /></svg>
+                    <img src="https://images.wallpaperscraft.com/image/single/motocross_kiss_love_moto_sport_sunset_120297_1366x768.jpg" alt="Imagen Portada" className="w-100"/>
 
                     <div class="container">
                         <div class="carousel-caption">
@@ -30,7 +29,7 @@ export default function Banner() {
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777" /></svg>
+                    <img src="https://images.wallpaperscraft.com/image/single/ktm_1290_super_duke_r_motorcycle_sports_123405_1366x768.jpg" alt="Imagen Portada" className="w-100"/>
 
                     <div class="container">
                         <div class="carousel-caption text-end">
