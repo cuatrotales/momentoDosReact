@@ -246,42 +246,42 @@ function App() {
           </div>
         </div>
         <button
-          className="btn btn-primary mt-3"
+          className="btn btn-outline-primary mt-3"
           type="submit"
           onClick={createArticulo}
         >
           Guardar
         </button>
         <button
-          className="btn btn-success mt-3 mx-3"
+          className="btn btn-outline-success mt-3 mx-3"
           type="submit"
           onClick={() => getArticuloPorId(sid)}
         >
           Buscar
         </button>
         <button
-          className="btn btn-warning mt-3 mx-3"
+          className="btn btn-outline-warning mt-3 mx-3"
           type="submit"
           onClick={() => updateArticulo(sid)}
         >
           Actualizar
         </button>
         <button
-          className="btn btn-danger mt-3 mx-3"
+          className="btn btn-outline-danger mt-3 mx-3"
           type="submit"
           onClick={() => deleteArticulo(sid)}
         >
           Eliminar
         </button>
         <button
-          className="btn btn-dark mt-3 mx-3"
+          className="btn btn-outline-primary mt-3 mx-3"
           type="submit"
           onClick={getArticulos}
         >
-          Listar Clientes
+          Listar Articulos
         </button>
         <button
-          className="btn btn-info mt-3 mx-3"
+          className="btn btn-outline-info mt-3 mx-3"
           type="submit"
           onClick={onClean}
         >
@@ -295,6 +295,7 @@ function App() {
             <th>Id</th>
             <th>Nombre</th>
             <th>Precio</th>
+            <th>Precio + Iva</th>
             <th>Iva (19%)</th>
           </thead>
           <tbody>
@@ -304,6 +305,7 @@ function App() {
                 <td>{customer.nombre}</td>
                 <td>{customer.precio}</td>
                 <td>{(customer.precio * 19) / 100 + customer.precio}</td>
+                <td>{(customer.precio * 19) / 100}</td>
               </tr>
             ))}
           </tbody>
